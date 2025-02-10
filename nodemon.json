@@ -1,0 +1,7 @@
+{
+    "watch": ["config","config","controllers","models","routes","services","index.js","utils","validations"], 
+    "ext": "js,json", 
+    "ignore": ["node_modules", "logs"], 
+    "exec": "node index.js"
+  }
+  
