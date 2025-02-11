@@ -16,7 +16,7 @@ const errorConverter = (err, req, res, next) => {
 	next(error);
 };
 
-const errorHandler = (err, req, res, next) => {
+const errorHandler = (err, req, res) => {
 	let statusCode = err.statusCode || 500; // Fallback la 500 dacă statusCode e undefined
 	let message = err.message || "Internal Server Error";
 

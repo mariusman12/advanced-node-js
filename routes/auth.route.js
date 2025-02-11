@@ -1,5 +1,4 @@
 const express = require("express");
-const { createBlog, getBlogs } = require("../controller/blog.controller");
 const { authController } = require("../controller");
 const validate = require("../middlewares/validate");
 const { userValidation, authValidation } = require("../validations");

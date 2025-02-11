@@ -6,15 +6,16 @@ export default [
 	{
 		files: ['**/*.js'],
 		languageOptions: {
-			sourceType: 'module',
+			sourceType: 'commonjs', // ✅ Setează CommonJS
 			ecmaVersion: 'latest',
-			globals: globals.browser,
+			globals: globals.node, // ✅ Setează variabile globale pentru Node.js
 		},
 		rules: {
 			semi: ['error', 'always'],
 			quotes: ['error', 'double'],
 			'no-unused-vars': 'warn',
 			'no-console': 'off',
+			'no-undef': 'off', // ✅ Dezactivează verificarea 'require' și 'module'
 		},
 	},
 	pluginJs.configs.recommended,

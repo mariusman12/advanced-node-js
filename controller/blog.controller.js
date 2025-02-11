@@ -1,4 +1,3 @@
-const Blog = require("../models/blog.model");
 const catchAsync = require("../utils/catchAsync");
 const { blogService } = require("../services/");
 const httpStatus = require("http-status").default || require("http-status");
