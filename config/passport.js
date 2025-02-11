@@ -1,7 +1,7 @@
-const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
-const config = require('./config');
-const { tokenTypes } = require('./tokens');
-const { userService } = require('../services/');
+const { Strategy: JwtStrategy, ExtractJwt } = require("passport-jwt");
+const config = require("./config");
+const { tokenTypes } = require("./tokens");
+const { userService } = require("../services/");
 const jwtOptions = {
 	secretOrKey: config.jwt,
 	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -10,7 +10,7 @@ const jwtOptions = {
 const jwtVerify = async (payload, done) => {
 	try {
 		if (payload.type != tokenTypes.ACCESS) {
-			throw new Error('Invalid token type');
+			throw new Error("Invalid token type");
 		}
 		const user = userService.getUserById(payload.sub);
 		if (!user) {

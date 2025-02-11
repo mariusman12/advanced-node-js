@@ -1,5 +1,5 @@
-const joi = require('joi');
-const { objectId } = require('./custom.validation');
+const joi = require("joi");
+const { objectId } = require("./custom.validation");
 const createBlogSchema = {
 	body: joi.object().keys({
 		title: joi.string().required(),

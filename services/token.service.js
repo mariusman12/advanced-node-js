@@ -1,8 +1,8 @@
-const jwt = require('jsonwebtoken');
-const dayjs = require('dayjs');
-const config = require('../config/config');
-const { tokenTypes } = require('../config/tokens');
-const Token = require('../models/token.model');
+const jwt = require("jsonwebtoken");
+const dayjs = require("dayjs");
+const config = require("../config/config");
+const { tokenTypes } = require("../config/tokens");
+const Token = require("../models/token.model");
 const generateToken = (userId, expires, type, secret = config.jwt) => {
 	const payload = {
 		sub: userId,
@@ -34,15 +34,15 @@ const verifyToken = async (token, type) => {
 		blacklisted: false,
 	});
 	if (!tokenDoc) {
-		throw new Error('Token not found');
+		throw new Error("Token not found");
 	}
 	return tokenDoc;
 };
 
 const generateAuthTokens = async userId => {
-	const accessTokenExpires = dayjs().add(config.accessExpirationMinutes, 'minutes');
+	const accessTokenExpires = dayjs().add(config.accessExpirationMinutes, "minutes");
 	const accessToken = generateToken(userId, accessTokenExpires, tokenTypes.ACCESS);
-	const refreshTokenExpires = dayjs().add(config.refreshExpirationDays, 'days');
+	const refreshTokenExpires = dayjs().add(config.refreshExpirationDays, "days");
 	const refreshToken = generateToken(userId, refreshTokenExpires, tokenTypes.REFRESH);
 	await saveToken(refreshToken, userId, refreshTokenExpires, tokenTypes.REFRESH);
 	return {

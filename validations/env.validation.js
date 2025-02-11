@@ -1,4 +1,4 @@
-const joi = require('joi');
+const joi = require("joi");
 
 
 const envVarSchema = joi.object({
@@ -10,4 +10,4 @@ const envVarSchema = joi.object({
 
 
 
-module.exports = envVarSchema
+module.exports = envVarSchema;

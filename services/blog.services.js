@@ -1,4 +1,4 @@
-const Blog = require('../models/blog.model');
+const Blog = require("../models/blog.model");
 
 const createBlog = async (body, userId) => {
 	await Blog.create({ ...body, createdBy: userId });

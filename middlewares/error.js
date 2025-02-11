@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const config = require('../config/config');
-const ApiError = require('../utils/ApiError');
-const httpStatus = require('http-status').default || require('http-status');
+const mongoose = require("mongoose");
+const config = require("../config/config");
+const ApiError = require("../utils/ApiError");
+const httpStatus = require("http-status").default || require("http-status");
 
 const errorConverter = (err, req, res, next) => {
 	let error = err;
@@ -18,18 +18,18 @@ const errorConverter = (err, req, res, next) => {
 
 const errorHandler = (err, req, res, next) => {
 	let statusCode = err.statusCode || 500; // Fallback la 500 dacă statusCode e undefined
-	let message = err.message || 'Internal Server Error';
+	let message = err.message || "Internal Server Error";
 
-	if (config.env === 'production' && !err.isOperational) {
+	if (config.env === "production" && !err.isOperational) {
 		statusCode = 500;
-		message = 'Internal Server Error';
+		message = "Internal Server Error";
 	}
 
 	const response = {
 		error: true,
 		code: statusCode,
 		message,
-		...(config.env === 'development' && { stack: err.stack }),
+		...(config.env === "development" && { stack: err.stack }),
 	};
 
 	res.locals.errorMessage = message;
