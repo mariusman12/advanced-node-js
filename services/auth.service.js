@@ -1,15 +1,17 @@
-const { tokenService } = require("../services");
-const userService = require("../services/user.service");
-const httpStatus = require("http-status").default || require("http-status");
-const { tokenTypes } = require("../config/tokens");
-const { RateLimiterMongo } = require("rate-limiter-flexible");
-const ApiError = require("../utils/ApiError");
-const mongoose = require("mongoose");
-const config = require("../config/config");
+const { tokenService } = require('../services');
+const userService = require('../services/user.service');
+const httpStatus = require('http-status').default || require('http-status');
+const { tokenTypes } = require('../config/tokens');
+const { tokenTypes } = require('../config/tokens');
+
+const { RateLimiterMongo } = require('rate-limiter-flexible');
+const ApiError = require('../utils/ApiError');
+const mongoose = require('mongoose');
+const config = require('../config/config');
 const login = async (email, password, ipAddr) => {
 	const rateLimiterOptioins = {
 		storeClient: mongoose.connection,
-		dbName: "test",
+		dbName: 'test',
 		blockDuration: 60 * 60 * 24,
 	};
 	const emailIpBruteLimiter = new RateLimiterMongo({
@@ -38,7 +40,7 @@ const login = async (email, password, ipAddr) => {
 				emailBruteLimiter.consume(email),
 			]);
 		await Promise.all(promises);
-		throw new ApiError(httpStatus.UNAUTHORIZED, "Incorrect email or password");
+		throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password');
 	}
 	return user;
 };
@@ -53,7 +55,7 @@ const refreshAuthToken = async refreshToken => {
 		await refreshTokenDoc.remove();
 		return tokenService.generateAuthTokens(user.id);
 	} catch {
-		throw new ApiError(httpStatus.UNAUTHORIZED, "Please authenticate");
+		throw new ApiError(httpStatus.UNAUTHORIZED, 'Please authenticate');
 	}
 };
 
