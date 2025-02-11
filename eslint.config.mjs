@@ -12,7 +12,7 @@ export default [
 		},
 		rules: {
 			semi: ['error', 'always'],
-			quotes: ['error', 'double'],
+			quotes: ['error', 'single'],
 			'no-unused-vars': 'warn',
 			'no-console': 'off',
 			'no-undef': 'off', // ✅ Dezactivează verificarea 'require' și 'module'
