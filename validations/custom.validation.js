@@ -8,6 +8,14 @@ const password = (value, helpers) => {
 	return value;
 };
 
+const objectId = (value, helpers) => {
+	if (!value.match(/^[1-9a-fA-F]{24}$/)) {
+		return helpers.message("'#{{labe}' must be a valid one");
+	}
+	return value;
+};
+
 module.exports = {
 	password,
+	objectId,
 };

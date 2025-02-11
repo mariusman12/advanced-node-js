@@ -14,7 +14,9 @@ const passport = require('passport');
 const { jwtStrategy } = require('./config/passport');
 const { xss } = require('express-xss-sanitizer');
 const helmet = require('helmet');
-
+const mongoSanitize = require('express-mongo-sanitize');
+const cors = require('cors');
+const { env } = require('./config/config');
 app.use(morgan.successHandler);
 app.use(morgan.errorHandler);
 
@@ -24,6 +26,15 @@ app.use(passport.initialize());
 passport.use('jwt', jwtStrategy);
 app.use(xss());
 app.use(helmet.contentSecurityPolicy(config.cspOptions));
+app.use(mongoSanitize());
+app.use(cors());
+app.options('*', cors());
+
+if (env === 'production') {
+	app.use(cors({ origin: 'url' }));
+	app.options('*', cors({ origin: 'url' }));
+}
+
 let server;
 async function startServer() {
 	try {
