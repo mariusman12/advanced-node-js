@@ -16,4 +16,9 @@ module.exports = {
 	jwt: envVars.JWT_SECRET,
 	accessExpirationMinutes: envVars.JWT_ACCES_EXPIRATION_MINUTES,
 	refreshExpirationDays: envVars.JWT_REFRESH_EXPIRATION_DAYS,
+	rateLimiter: {
+		maxAttemptsPerDay: envVars.MAX_ATTEMPTS_PER_DAY,
+		maxAttemptsByIpUsername: envVars.MAX_ATTEMPTS_BY_IP_USERNAME,
+		maxAttemptsPerEmail: envVars.MAX_ATTEMPTS_PER_EMAIL,
+	},
 };

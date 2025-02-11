@@ -1,5 +1,5 @@
 const ApiError = require('../utils/ApiError');
-const httpStatus = require('http-status');
+const httpStatus = require('http-status').default || require('http-status');
 const verifyCallBack = (req, resolve, reject) => async (err, user, info) => {
 	if (err || info || !user) {
 		return reject(new ApiError(httpStatus.UNAUTHORIZED, 'please authenticate'));

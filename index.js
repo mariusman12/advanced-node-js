@@ -19,6 +19,7 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(passport.initialize());
 passport.use('jwt', jwtStrategy);
+let server;
 async function startServer() {
 	try {
 		await connectToDatabase();

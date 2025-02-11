@@ -5,8 +5,6 @@ const validate = require('../middlewares/validate');
 const router = express.Router();
 const auth = require('../middlewares/auth');
 
-router.use(auth);
-
 router.get('/', (req, res) => {
 	res.send('Salut! Serverul Node.js rulează cu succes!');
 });

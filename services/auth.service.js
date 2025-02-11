@@ -2,10 +2,42 @@ const { tokenService } = require('../services');
 const userService = require('../services/user.service');
 const httpStatus = require('http-status').default || require('http-status');
 const { tokenTypes } = require('../config/tokens');
+const { RateLimiterMongo } = require('rate-limiter-flexible');
 const ApiError = require('../utils/ApiError');
-const login = async (email, password) => {
+const mongoose = require('mongoose');
+const config = require('../config/config');
+const login = async (email, password, ipAddr) => {
+	const rateLimiterOptioins = {
+		storeClient: mongoose.connection,
+		dbName: 'test',
+		blockDuration: 60 * 60 * 24,
+	};
+	const emailIpBruteLimiter = new RateLimiterMongo({
+		...rateLimiterOptioins,
+		points: config.rateLimiter.maxAttemptsByIpUsername,
+		duration: 60 * 10,
+	});
+
+	const slowerBruteLimiter = new RateLimiterMongo({
+		...rateLimiterOptioins,
+		points: config.rateLimiter.maxAttemptsPerDay,
+		duration: 60 * 60 * 24,
+	});
+
+	const emailBruteLimiter = new RateLimiterMongo({
+		...rateLimiterOptioins,
+		points: config.rateLimiter.maxAttemptsPerEmail,
+		duration: 60 * 60 * 24,
+	});
+	const promises = [slowerBruteLimiter.consume(ipAddr)];
 	const user = await userService.getUserByEmail(email);
 	if (!user || !(await user.isPasswordMatch(password))) {
+		user &&
+			promises.push([
+				emailIpBruteLimiter.consume(`${email}_${ipAddr}`),
+				emailBruteLimiter.consume(email),
+			]);
+		await Promise.all(promises);
 		throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password');
 	}
 	return user;
