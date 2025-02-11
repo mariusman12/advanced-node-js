@@ -2,8 +2,6 @@ const { tokenService } = require('../services');
 const userService = require('../services/user.service');
 const httpStatus = require('http-status').default || require('http-status');
 const { tokenTypes } = require('../config/tokens');
-const { tokenTypes } = require('../config/tokens');
-
 const { RateLimiterMongo } = require('rate-limiter-flexible');
 const ApiError = require('../utils/ApiError');
 const mongoose = require('mongoose');
