@@ -21,4 +21,12 @@ module.exports = {
 		maxAttemptsByIpUsername: envVars.MAX_ATTEMPTS_BY_IP_USERNAME,
 		maxAttemptsPerEmail: envVars.MAX_ATTEMPTS_PER_EMAIL,
 	},
+	cspOptions: {
+		directives: {
+			defaultSrc: ["'self'"],
+			styleSrc: ["'self'", "'unsafe-inline'"],
+			scriptSrc: ["'self'", "'unsafe-inline'"],
+			fontSrc: ["'self'"],
+		},
+	},
 };

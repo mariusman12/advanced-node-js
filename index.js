@@ -12,6 +12,9 @@ const logger = require('./config/logger');
 const morgan = require('./config/morgan');
 const passport = require('passport');
 const { jwtStrategy } = require('./config/passport');
+const { xss } = require('express-xss-sanitizer');
+const helmet = require('helmet');
+
 app.use(morgan.successHandler);
 app.use(morgan.errorHandler);
 
@@ -19,6 +22,8 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(passport.initialize());
 passport.use('jwt', jwtStrategy);
+app.use(xss());
+app.use(helmet.contentSecurityPolicy(config.cspOptions));
 let server;
 async function startServer() {
 	try {
